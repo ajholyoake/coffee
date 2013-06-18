@@ -1,0 +1,40 @@
+
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+.capsuleImage{
+  width:50px;
+}
+
+.table tr.vcenter > td.vcenter{
+vertical-align:middle !important;
+}
+
+.table tr.vcenter input.incenter{
+  margin-bottom:0;
+}
+#infoAlert{
+  display:none;
+}
+
+input:invalid{
+  
+  color: #b94a48;
+  border-color: #ee5f5b;
+  border-color: #e9322d;
+  -webkit-box-shadow: 0 0 6px #f8b9b7;
+  -moz-box-shadow: 0 0 6px #f8b9b7;
+  box-shadow: 0 0 6px #f8b9b7;
+}
+
+
+
+
+
+
+
+
+
+
