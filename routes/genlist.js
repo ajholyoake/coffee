@@ -28,7 +28,10 @@ exports.generate = function(req,res){
       "Decaffeinato",
       "Fortissio Lungo",
       "Vivalto Lungo",
-      "Finezzo Lungo"];
+      "Finezzo Lungo",
+      "Vanilio",
+      "Caramelito",
+      "Ciocattino"];
     var ii = 0;
 
     var requestlistitem = function(ii){
