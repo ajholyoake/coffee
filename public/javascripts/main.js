@@ -1,16 +1,18 @@
+
+
 $(function(){
 
 var updateTotal = function(){
 var total = 0;
 var ntotal = 0;
-
 $('.quantitybox').each(function(ind,el){updateItemTotals(el); ntotal+=parseInt($(this).val());});
 $('.totalbox').each(function(){ total += parseFloat($(this).text().replace(/[^0-9\.]/,""));});
-$('#bigtotalnumber').text(ntotal);
-$('#bigtotal').html('&pound; ' + total.toFixed(2));
+$('.bigtotalnumber').text(ntotal);
+$('.bigtotal').html('&pound; ' + total.toFixed(2));
 
 
 };
+
 
 var updateItemTotals = function(that){
 
@@ -21,6 +23,7 @@ var price = price * mul;
 $row.find('.totalbox').html('&pound; '+ price.toFixed(2));
 };
 
+$('button.close').click(function(){$(this).parent().fadeOut()});
 $('.quantitybox').bind('keypress', function(){
     setTimeout(updateTotal,1)
     });

@@ -31,7 +31,7 @@ var db = mongo.db('localhost:27017/coffee?auto_reconnect');
       }
 
 
-      res.render('user',{username:pretty_username, displayOrder:displayOrder, title:'Hot Black'});
+      res.render('user',{username:pretty_username, displayOrder:displayOrder, title:'Hot, Black and Wet Stuff'});
       //res.send("respond with a resource");
 
     });

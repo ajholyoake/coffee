@@ -1,0 +1,8 @@
+Things to do:
+
+On admin side:
+
+Take ownership of an order
+Add payment box to current order for each user
+
+List orders for each user

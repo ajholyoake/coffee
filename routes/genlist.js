@@ -29,6 +29,7 @@ exports.generate = function(req,res){
       "Fortissio Lungo",
       "Vivalto Lungo",
       "Finezzo Lungo",
+      "Linizio Lungo",
       "Vanilio",
       "Caramelito",
       "Ciocattino"];

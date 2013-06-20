@@ -6,22 +6,41 @@ block content
       .span12
         h1= title
         h4 Order number: #{orderNumber}
-        table.table.table-hover
+        p Number of Capsules: #{capsuleNumber}, Total Cost: #{totalCost}
+        table.table.table-hover.ordertable
           thead
             tr
               th
               each val,key in coffees
-                th.cotitle #{val}
+                th.vertical #{val}
               th Total Cost
+              th Paid
+              th Remaining
           tbody
             tr.info 
               td Totals
                 each val in totals
                   td #{val}
-              td #{totalCost}
+              td#totalCost #{totalCost}
+              td#totalPaid
+              td#totalRemaining
 
             each val,key in usersummary
               tr 
                 td #{key}
-                  each v in val
+                each v,ind in val
+                  if ind === val.length-1
+                    td
+                      input(data-id=v.id,type="text",value=v.paid,pattern='[0-9\.]*').paybox
+                  else
                     td #{v}
+                td.payremaining
+                      
+    .row-fluid
+      .span3
+        a(href='mailto:alex.holyoake@caterham.com').btn.btn-large.btn-default Email Reminder
+       .span3.pull-right
+        button(type=button)#savebtn.btn.btn-large.btn-primary Save Payments
+
+block jscripts
+  script(src='/coffee/javascripts/currentorder.js')

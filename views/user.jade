@@ -2,11 +2,19 @@ extends layout
 
 block content
 
+  .navbar.navbar-fixed-top.navbar-inverse
+    .navbar-inner
+      .container
+        a(href='#').brand #{title}
+        ul.nav.pull-right
+          li Current order:
+          li.bigtotalnumber
+          li.bigtotal
+
   .container
     .row-fluid
       .span12
-        h1= title
-        p Alright #{username}, come get your #{title}
+        p Hi #{username}, come get your #{title}
         table.table.table-hover
           thead
             th
@@ -33,18 +41,20 @@ block content
               td
               td.vcenter 
                 h4 Total:
-              td#bigtotalnumber.vcenter
-              td#bigtotal.vcenter
+              td.bigtotalnumber.vcenter
+              td.bigtotal.vcenter
 
     .row-fluid
       .span10
         #infoAlert.alert
-          button(type="button",class="close",data-dismiss="alert")
+          button(type="button",class="close")
             | &times;
           span#messageText Sending to the server. If you reload, your order should still be here.
       .span2
         p
           button(type=button)#orderButton.btn.btn-large.btn-primary Place Order
-        
+
+block jscripts
+    script(src='/coffee/javascripts/main.js')
           
         
