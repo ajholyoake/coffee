@@ -19,6 +19,7 @@ block content
           thead
             th
             th
+            th Intensity
             th 
             th Price
             th Quantity
@@ -28,14 +29,16 @@ block content
               tr.vcenter
                 td.names.vcenter #{key}
                 td.vcenter
-                  a(href=val.url)
+                  a(href=val.url,data-title="Aromatic Profile:"+val.aromaticprofile,data-content=val.longdescription,data-html=1).pops
                     img(src=val.img).capsuleImage
+                td.vcenter #{val.intensity}
                 td.vcenter #{val.types}
                 td.vcenter.pricebox &pound; #{val.price}
                 td.vcenter
                   input(type="text",value=val.count,pattern='[0-9]*0').incenter.span9.quantitybox
                 td.vcenter.totalbox
             tr.vcenter
+              td
               td
               td
               td

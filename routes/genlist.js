@@ -45,6 +45,14 @@ exports.generate = function(req,res){
         var $ = cheerio.load(body);
         var imgsrc = $('.nes_bloc-degrade-pop img').attr('src');
         var price = $(".nes_list-price").html();
+        var intensity = $('.nes_active-intensity>p>strong').html();
+        var potential_desc = $('.scroll-bloc').find('p');
+        if(potential_desc.length){
+             var longdescription = potential_desc.first().html();
+             } else {
+             var longdescription = $('.scroll-bloc').text();
+             }
+        var aromaticprofile = $('p.nes_infos').html();
         var types = [];
         $("li.nes_ov-visible .nes_img-cup .info-bulle-css img").each(function(){types.push($(this).attr('alt'));});
         if (price)
@@ -53,7 +61,7 @@ exports.generate = function(req,res){
 
           var curl = url + c;
           if(price)
-          {out[coffeelist[ii]] = {img: 'https://www.nespresso.com' + imgsrc, price:price, url:curl, types:types }};
+          {out[coffeelist[ii]] = {img: 'https://www.nespresso.com' + imgsrc, price:price, url:curl, types:types, intensity:intensity, longdescription:longdescription, aromaticprofile:aromaticprofile }};
 
             if (ii === coffeelist.length-1){
               var ul = { "orderNumber": orderNumber,
@@ -69,7 +77,8 @@ exports.generate = function(req,res){
       });
 
     };
-
     requestlistitem(ii);
+
+    res.send('Done');
   });
 };
