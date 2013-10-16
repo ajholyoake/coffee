@@ -60,7 +60,7 @@ $(function(){
       } else {
 
         $.post('coffee/order',d,function(data,txtStatus,jqXHR){
-          $('#messageText').html('Sending to the server. If you reload, your order should still be here.');
+          $('#messageText').html("You're done - if you really want to check that this has worked then reload and see if the numbers are still here.");
           $('#infoAlert').removeClass().addClass('alert alert-info').fadeIn();
         },'json');
 
