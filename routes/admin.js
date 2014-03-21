@@ -24,6 +24,7 @@ exports.currentorder = function(req,res){
         var usersummary = {};
         var ii,jj;
         var capsuleNumber = 0;
+        var current_user = formatUsername(req.headers['x-iisnode-auth_user']);
 
         for(ii in coffees){
           coffeelist.push(ii);
@@ -33,6 +34,8 @@ exports.currentorder = function(req,res){
         for (ii = 0; ii< coffeelist.length;ii++){
           totals[ii] = 0;
         }
+
+        var orderowner = (orders[0] && orders[0].owner) ? formatUsername(orders[0].owner) : false;
 
         for (ii = 0; ii < orders.length; ii++){
           var fu = formatUsername(orders[ii].username);
@@ -64,7 +67,17 @@ exports.currentorder = function(req,res){
         }
         totalCost = totalCost.toFixed(2);
 
-        res.render('currentorder',{title:"Current Order", coffees:coffeelist,totals:totals,usersummary:usersummary,totalCost:totalCost,orderNumber:ordno, capsuleNumber:capsuleNumber});
+        db.collection('orders').find({"username":req.headers['x-iisnode-auth_user']},{sort:[['orderNumber',-1]]}).toArray(function(err,userorders){
+          var ordlist = [];
+          userorders.forEach(function(el){
+          var ncoffees = 0;
+          for(var key in el.list){ ncoffees += el.list[key];}
+          if(ncoffees > 0){
+          ordlist.push(el.orderNumber);
+          }
+          });
+          res.render('currentorder',{title:"Current Order", coffees:coffeelist,totals:totals,usersummary:usersummary,totalCost:totalCost,orderNumber:ordno, capsuleNumber:capsuleNumber,owner:orderowner,user:current_user,owns:current_user === orderowner, userorders:ordlist});
+        });
       });
 
     });
@@ -72,12 +85,34 @@ exports.currentorder = function(req,res){
 };
 
 
+exports.own = function(req,res){
+  var db = mongo.db('localhost:27017/coffee?auto_reconnect');
+  var current_user = req.headers['x-iisnode-auth_user'];
+  if(req.body){
+    var ordno = parseFloat(req.body.orderNumber);
+    if(req.body.take === 'true'){
+      //Own the order
+
+      db.collection('orders').update({"orderNumber":ordno},{"$set":{owner:current_user}},{multi:true},function(a,b){
+        console.log('thing');
+      });
+    } else  {
+      //Give back the order
+      db.collection('orders').update({orderNumber:ordno},{"$set":{"owner":false}},{multi:true},function(a,b){console.log('thing');});
+    }
+  }
+  res.send('Done');
+};
+
+
 exports.pay = function(req,res){
-var db = mongo.db('localhost:27017/coffee?auto_reconnect');
+  var db = mongo.db('localhost:27017/coffee?auto_reconnect');
+  var current_user = formatUsername(req.headers['x-iisnode-auth_user']);
   if(req.body){
     for(var ii = 0; ii <req.body.list.length; ii++)
     {
-       db.collection('orders').updateById(req.body.list[ii][0],{"$set":{paid:req.body.list[ii][1]}});
+
+      db.collection('orders').updateById(req.body.list[ii][0],{"$set":{paid:req.body.list[ii][1],owner:current_user}});
     }
-}
+  }
 };

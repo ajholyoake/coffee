@@ -61,8 +61,9 @@ var db = mongo.db('localhost:27017/coffee?auto_reconnect');
       data.orderNumber = orderNumber;
 
       db.collection('orders').update({"orderNumber":orderNumber, "username":username},data,{upsert:true},function(err)
-      { });
+      {
       res.send({ok:true});
+      });
   
     });
     });

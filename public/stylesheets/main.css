@@ -44,8 +44,13 @@ table div.rotated {
     white-space: nowrap;
 }
 
+thead {
+  background-color:#FFFFFF;
+}
+
 thead th {
     vertical-align: top;
+
 }
 
 table .vertical {
@@ -56,4 +61,6 @@ table .vertical {
   width:50px;
 }
 
-
+#savebtn, #takeownership {
+  float:right;
+}

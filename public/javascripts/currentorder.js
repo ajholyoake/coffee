@@ -42,6 +42,9 @@ var totalpaid = 0;
 var totalremaining = 0;
 var totalcost = 0;
 var p;
+
+$('table.table').floatThead();
+
 $('.paybox').each(function(ind,el){
   p = updateItemTotals(el); 
   totalremaining += p[0];
@@ -49,10 +52,13 @@ $('.paybox').each(function(ind,el){
   totalpaid += p[2];
   });
 
+var hrefstr = 'mailto:alex.holyoake@caterhamf1?';
+hrefstr += 'body=' + encodeURIComponent('<table><tbody><tr><td>yo</td><td> dfs</td></tr></tbody></table>');
+hrefstr += '&subject=' + encodeURIComponent('Coffee Order');
 
 $('#totalPaid').html('&pound; ' + totalpaid.toFixed(2));
 $('#totalRemaining').html('&pound; ' + totalremaining.toFixed(2));
-
+$('#reminder').attr('href',hrefstr);
 
 };
 
@@ -81,13 +87,29 @@ var ar = {list:[]};
 $('.paybox').each(function(){
 ar.list.push([$(this).attr('data-id'), $(this).val()])
 });
-
 $.post('/coffee/pay',ar,function(data,txtStatus,jqXHR){
+});
+});
 
+$('#takeownership').click(function(){
+var ar = {};
+ar.take = true;
+ar.orderNumber = $('#takeownership').data('id');
+
+$.post('/coffee/own',ar,function(data,txtStatus,jqXHR){
+window.location.reload(true);
 });
 
 
-
 });
 
+$('#disown').click(function(){
+var ar = {};
+ar.take = false;
+ar.orderNumber = $('#disown').data('id');
+
+$.post('/coffee/own',ar,function(data,txtStatus,jqXHR){
+window.location.reload(true);
+});
+});
 });

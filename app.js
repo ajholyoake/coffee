@@ -37,6 +37,7 @@ if ('development' == app.get('env')) {
 app.get(rootURL , user.hello);
 app.post(rootURL + '/order', user.order);
 app.post(rootURL + '/pay', admin.pay);
+app.post(rootURL + '/own', admin.own);
 app.get(rootURL + '/currentorder/:id?',admin.currentorder);
 
 app.get(rootURL +'/genlist/:id?',genlist.generate);

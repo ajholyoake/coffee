@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  .container
+  .container(style="width:90%;")
     .row-fluid
       .span12
         h1= title
@@ -14,33 +14,51 @@ block content
               each val,key in coffees
                 th.vertical #{val}
               th Total Cost
-              th Paid
-              th Remaining
+              if owns
+                th Paid
+                th Remaining
           tbody
             tr.info 
               td Totals
                 each val in totals
                   td #{val}
               td#totalCost #{totalCost}
-              td#totalPaid
-              td#totalRemaining
+              if owns
+                td#totalPaid
+                td#totalRemaining
 
             each val,key in usersummary
               tr 
                 td #{key}
                 each v,ind in val
-                  if ind === val.length-1
+                  if ind === val.length-1 && owns
                     td
                       input(data-id=v.id,type="text",value=v.paid,pattern='[0-9\.]*').paybox
-                  else
-                    td #{v}
-                td.payremaining
-                      
+                  else if ind !== val.length-1
+                    td #{v} 
+                if owns
+                  td.payremaining
+    if owns        
+      .row-fluid
+        //.span3
+        //  a(href='mailto:alex.holyoake@caterham.com')#reminder.btn.btn-large.btn-default Email Reminder
+        .span3
+         button(type=button,data-id=orderNumber)#disown.btn.btn-large.btn-danger Disown order
+        .span3.pull-right
+          button(type=button)#savebtn.btn.btn-large.btn-primary Save Payments
+    else if capsuleNumber > 200 && owner === false
+      .row-fluid
+        .span3.pull-right
+          button(type=button,data-id=orderNumber)#takeownership.btn.btn-large.btnprimary Take ownership!
+
     .row-fluid
-      .span3
-        a(href='mailto:alex.holyoake@caterham.com').btn.btn-large.btn-default Email Reminder
-       .span3.pull-right
-        button(type=button)#savebtn.btn.btn-large.btn-primary Save Payments
+      .span12
+          p Your other orders
+          each val, key in userorders
+            a(href="/coffee/currentorder/" + val) #{val} 
 
 block jscripts
+  script(src='/coffee/javascripts/vendor/underscore-min.js')
+  script(src='/coffee/javascripts/vendor/jquery.floatThead.js')
   script(src='/coffee/javascripts/currentorder.js')
+
