@@ -1,0 +1,24 @@
+#Good luck finding the appropriate names for these coffees!
+#We get it from the url https://www.nespresso.com/uk/en/quickView/coffe-name
+Kazaar
+Dharkan Coffee
+Ristretto
+Arpeggio
+Roma
+Livanto
+Capriccio
+Volluto
+Cosi
+Indriya from India
+Rosabaya de Colombia
+Dulsao do Brasil
+Bukeela Ka Ethiopia
+Decaffeinato Intenso
+Decaffeinato Lungo
+Decaffeinato
+Fortissio Lungo
+Vivalto Lungo
+Linizio Lungo
+Vanilio
+Caramelito
+Ciocattino
