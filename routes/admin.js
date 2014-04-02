@@ -11,6 +11,7 @@ exports.currentorder = function(req,res){
   var db = mongo.db('localhost:27017/coffee?auto_reconnect');
   db.collection('coffeelist').find({},{limit:1, sort:[['orderNumber',-1]]}).toArray(function(err,stuff){
     var ordno = parseInt(stuff[0].orderNumber);
+    var maxordno = ordno;
     if(req.params.id){ ordno = req.params.id;} 
     ordno = parseInt(ordno);
     db.collection('coffeelist').find({"orderNumber":ordno}).toArray(function(err,coffees){
@@ -76,7 +77,7 @@ exports.currentorder = function(req,res){
           ordlist.push(el.orderNumber);
           }
           });
-          res.render('currentorder',{title:"Current Order", coffees:coffeelist,totals:totals,usersummary:usersummary,totalCost:totalCost,orderNumber:ordno, capsuleNumber:capsuleNumber,owner:orderowner,user:current_user,owns:current_user === orderowner, userorders:ordlist});
+          res.render('currentorder',{title:"Current Order", coffees:coffeelist,totals:totals,usersummary:usersummary,totalCost:totalCost,orderNumber:ordno, capsuleNumber:capsuleNumber,owner:orderowner,user:current_user,owns:current_user === orderowner, userorders:ordlist,lastorder:maxordno===ordno});
         });
       });
 

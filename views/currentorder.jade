@@ -1,11 +1,14 @@
 extends layout
 
 block content
+  
   .container(style="width:90%;")
     .row-fluid
       .span12
         h1= title
         h4 Order number: #{orderNumber}
+        if owner
+          h4 Owner: #{owner}
         p Number of Capsules: #{capsuleNumber}, Total Cost: #{totalCost}
         table.table.table-hover.ordertable
           thead
@@ -42,8 +45,12 @@ block content
       .row-fluid
         //.span3
         //  a(href='mailto:alex.holyoake@caterham.com')#reminder.btn.btn-large.btn-default Email Reminder
-        .span3
+        .span2
          button(type=button,data-id=orderNumber)#disown.btn.btn-large.btn-danger Disown order
+        if lastorder
+          .span3
+            button(type=button)#finalizebtn.btn.btn-large.btn-warning Finalize order (FOREVER!)
+        
         .span3.pull-right
           button(type=button)#savebtn.btn.btn-large.btn-primary Save Payments
     else if capsuleNumber > 200 && owner === false
@@ -56,6 +63,12 @@ block content
           p Your other orders
           each val, key in userorders
             a(href="/coffee/currentorder/" + val) #{val} 
+   
+    #newOrderModal.modal.hide.fade
+      .modal-header
+        h3 Closing Order
+      .modal-body
+        p Closing current order and creating a new one - chill your beans
 
 block jscripts
   script(src='/coffee/javascripts/vendor/underscore-min.js')

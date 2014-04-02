@@ -103,6 +103,17 @@ window.location.reload(true);
 
 });
 
+$('#finalizebtn').click(function(){
+
+//Code to display a box!
+$('#newOrderModal').modal({show:true});
+
+$.get('/coffee/genlist',function(data,txtStatus,jqXHr){
+$('#newOrderModal').modal({show:false});
+window.location.reload(true);
+
+})});
+
 $('#disown').click(function(){
 var ar = {};
 ar.take = false;
