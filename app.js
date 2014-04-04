@@ -9,6 +9,7 @@ var express = require('express')
   , user = require('./routes/user')
   , genlist = require('./routes/genlist')
   , admin   = require('./routes/admin')
+  , stats   = require('./routes/stats')
   , http = require('http')
   , path = require('path');
 
@@ -39,8 +40,9 @@ app.post(rootURL + '/order', user.order);
 app.post(rootURL + '/pay', admin.pay);
 app.post(rootURL + '/own', admin.own);
 app.get(rootURL + '/currentorder/:id?',admin.currentorder);
-
 app.get(rootURL +'/genlist/:id?',genlist.generate);
+app.get(rootURL + '/stats',stats.display);
+app.get(rootURL + '/statsinfo',stats.data);
 
 
 http.createServer(app).listen(app.get('port'), function(){

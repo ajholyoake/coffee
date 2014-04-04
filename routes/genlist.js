@@ -23,30 +23,6 @@ exports.generate = function(req,res){
     }).filter(function(x){ 
     return /\S/.test(x); });
 
-//    coffeelist = 
-//    [
-//      "Kazaar",
-//      "Dharkan Coffee",
-//      "Ristretto",
-//      "Arpeggio",
-//      "Roma",
-//      "Livanto",
-//      "Capriccio",
-//      "Volluto",
-//      "Cosi",
-//      "Indriya from India",
-//      "Rosabaya de Colombia",
-//      "Dulsao do Brasil",
-//      "Bukeela Ka Ethiopia",
-//      "Decaffeinato Intenso",
-//      "Decaffeinato Lungo",
-//      "Decaffeinato",
-//      "Fortissio Lungo",
-//      "Vivalto Lungo",
-//      "Linizio Lungo",
-//      "Vanilio",
-//      "Caramelito",
-//      "Ciocattino"];
     var ii = 0;
     var coffeesdone = 0;
     
@@ -63,6 +39,9 @@ exports.generate = function(req,res){
         var imgsrc = $('.nes_bloc-degrade-pop img').attr('src');
         var price = $(".nes_list-price").html();
         var intensity = $('.nes_active-intensity>p>strong').html();
+        if (!intensity){
+         intensity = parseInt(body.substr(body.toLowerCase().indexOf('intensity')).match(/\d+/)[0],10);
+         }
         var potential_desc = $('.scroll-bloc').find('p');
         if(potential_desc.length){
              var longdescription = potential_desc.first().html();

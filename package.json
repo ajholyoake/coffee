@@ -10,6 +10,7 @@
     "jade": "*",
     "cheerio": "*",
     "request": "*",
-    "mongoskin": "*"
+    "mongoskin": "*",
+    "lodash": "~2.4.1"
   }
 }

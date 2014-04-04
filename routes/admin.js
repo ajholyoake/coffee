@@ -1,11 +1,7 @@
 var mongo = require('mongoskin');
-
+var utils = require('./utils');
 var orderNumber = module.parent.exports.orderNumber;
 
-function formatUsername(str)
-{
-  return str.substr(str.indexOf('\\')+1).replace(/\./g,' ').replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-}
 
 exports.currentorder = function(req,res){
   var db = mongo.db('localhost:27017/coffee?auto_reconnect');
@@ -25,7 +21,7 @@ exports.currentorder = function(req,res){
         var usersummary = {};
         var ii,jj;
         var capsuleNumber = 0;
-        var current_user = formatUsername(req.headers['x-iisnode-auth_user']);
+        var current_user = utils.formatUsername(req.headers['x-iisnode-auth_user']);
 
         for(ii in coffees){
           coffeelist.push(ii);
@@ -36,10 +32,10 @@ exports.currentorder = function(req,res){
           totals[ii] = 0;
         }
 
-        var orderowner = (orders[0] && orders[0].owner) ? formatUsername(orders[0].owner) : false;
+        var orderowner = (orders[0] && orders[0].owner) ? utils.formatUsername(orders[0].owner) : false;
 
         for (ii = 0; ii < orders.length; ii++){
-          var fu = formatUsername(orders[ii].username);
+          var fu = utils.formatUsername(orders[ii].username);
           var usercost = 0;
 
           usersummary[fu] = [];
@@ -108,7 +104,7 @@ exports.own = function(req,res){
 
 exports.pay = function(req,res){
   var db = mongo.db('localhost:27017/coffee?auto_reconnect');
-  var current_user = formatUsername(req.headers['x-iisnode-auth_user']);
+  var current_user = utils.formatUsername(req.headers['x-iisnode-auth_user']);
   if(req.body){
     for(var ii = 0; ii <req.body.list.length; ii++)
     {
