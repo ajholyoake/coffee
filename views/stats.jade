@@ -4,16 +4,23 @@ block content
   .container
     .row-fluid
       .span12
-        h2 Coffee Performance Metrics
+        h2 Performance Metrics
     .row-fluid
         .span12
           h3 DO Stats
     .row-fluid
-        .span12#DOStats
+        .span3
+          h4 Total 
+          p#totalCoffees
+        .span9#monthlyTotals
+    .row-fluid
+        .span12#flavourTotals
     .row-fluid
         .span12
           h3 Leaderboards
-        .span12#leaderboards    
+        .span12#leaderboards
 
 block jscripts
+  script(src='//cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.js')
   script(src='/coffee/javascripts/stats.js')
+  link(rel='stylesheet',href='/coffee/stylesheets/stats.css')

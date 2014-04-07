@@ -1,0 +1,28 @@
+.bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis {
+  font: 12px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#monthlyTotals .x.axis path, #monthlyTotals .x.axis line, #monthlyTotals .y.axis path, #monthlyTotals .y.axis line, #monthlyTotals .y.axis text {
+
+  display:none;
+}
+
+#flavourTotals .y.axis path, #flavourTotals .y.axis line{
+  
+  display:none;
+}
