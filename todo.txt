@@ -2,8 +2,5 @@ Things to do:
 
 On admin side:
 
-Take ownership of an order
-Add payment box to current order for each user
-
-List orders for each user
-Remove 0s from the current order page
+Put coffee list for new order into a db table
+Also file for creating the fixtures (i.e. write from the text file to the db to begin with)
