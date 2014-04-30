@@ -10,17 +10,20 @@ d3.select("#totalCoffees").html(data.DOStats.total);
 
 //Monthly totals
 
-monthlyTotalsChart(data.DOStats.monthlyTotals);
-flavourTotalsChart(data.DOStats.flavourTotals);
+monthlyTotalsChart(data.DOStats.monthlyTotals,'#monthlyTotals');
+flavourTotalsChart(data.DOStats.flavourTotals,'#flavourTotals');
+
+flavourTotalsChart(data.allUserStats.leaderboard,'#quantityLeaderboard');
+flavourTotalsChart(data.allUserStats.intensityleaderboard,'#intensityLeaderboard');
 
 });
 
 })
 
 
-function flavourTotalsChart(data){
+function flavourTotalsChart(data,element){
 
-  var $target = d3.select('#flavourTotals');
+  var $target = d3.select(element);
 
   var margin = {top:10, right:10, bottom:10, left:150},
       width  = parseFloat($target.style("width")) - margin.left - margin.right,
@@ -30,7 +33,10 @@ function flavourTotalsChart(data){
   //Bosh the data into an appropriate format
   var d = [];
   d3.map(data).forEach(function(k,v){
+    if (v)
+    {
     d.push({coffee:k,value:v});
+    }
   })
     d.sort(function(a,b){return b.value - a.value;});
 
@@ -78,9 +84,9 @@ function flavourTotalsChart(data){
 
 }
 
-function monthlyTotalsChart(data){
+function monthlyTotalsChart(data,element){
 
-  var $target = d3.select('#monthlyTotals');
+  var $target = d3.select(element);
 
 var margin = {top:20, right:50, bottom:20, left:50},
     width = parseFloat($target.style("width")) - margin.left - margin.right,
