@@ -3,6 +3,7 @@ var _ = require('lodash');
 var DOStats = require('./stats/DOStats');
 var userStats = require('./stats/userStats');
 var allUserStats = require('./stats/allUserStats');
+var awardStats = require('./stats/awardStats');
 
 var dbstring= 'localhost:27017/coffee?auto_reconnect';
 
@@ -27,6 +28,7 @@ var user = req.headers['x-iisnode-auth_user'];
 obj.DOStats = DOStats(allorders);
 obj.userStats = userStats(allorders.filter(function(x){return x.username === user;}));
 obj.allUserStats = allUserStats(allorders);
+obj.awardStats = awardStats(allorders);
 
 res.send(obj);
 });
