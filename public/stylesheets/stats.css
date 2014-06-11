@@ -10,6 +10,8 @@
   font: 12px sans-serif;
 }
 
+
+
 .axis path,
 .axis line {
   fill: none;
@@ -25,4 +27,9 @@
 #flavourTotals .y.axis path, #flavourTotals .y.axis line{
   
   display:none;
+}
+
+.award-image {
+  height:150px;
+  margin-left:auto;
 }

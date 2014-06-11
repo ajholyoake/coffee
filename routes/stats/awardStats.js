@@ -1,21 +1,28 @@
 module.exports = function awardStats(x){
 
-var result = {};
+var result = [];
 
-result.dameEdna = {};
-result.dameEdna.list = AwardResults(x,/Vanilio|Caramelito|Ciocattino/);
-result.dameEdna.description = 'Vanilio, Caramelito and Ciocattino';
-result.dameEdna.img = 'images/dame_edna.jpg';
+dameEdna = {};
+dameEdna.title = "Dame Edna";
+dameEdna.list = AwardResults(x,/Vanilio|Caramelito|Ciocattino/);
+dameEdna.description = 'Vanilio, Caramelito and Ciocattino';
+dameEdna.img = 'images/dame_edna.jpg';
+result.push(dameEdna);
 
-result.wetTowel = {};
-result.wetTowel.list = AwardResults(x,/.*Decaffeinato.*/);
-result.wetTowel.description = 'Afraid of caffeine';
-result.wetTowel.img = 'images/wet_towel.jpg';
+wetTowel = {};
+wetTowel.title = "Wet Towel";
+wetTowel.list = AwardResults(x,/.*Decaffeinato.*/);
+wetTowel.description = 'Afraid of caffeine';
+wetTowel.img = 'images/wet_towel.jpg';
+result.push(wetTowel);
 
-result.nails = {};
-result.nails.list    = AwardResults(x,/Ristretto/);
-result.nails.description = 'Ristretto = Man Fuel';
-result.nails.img = 'images/nails.jpg';
+nails = {};
+nails.title = "Nails";
+nails.list    = AwardResults(x,/Ristretto/);
+nails.description = 'Ristretto = Man Fuel';
+nails.img = 'images/nails.jpg';
+result.push(nails);
+
 
 return result;
 
