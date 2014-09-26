@@ -1,11 +1,10 @@
-var mongo = require('mongoskin');
 var _ = require('lodash');
 var DOStats = require('./stats/DOStats');
 var userStats = require('./stats/userStats');
 var allUserStats = require('./stats/allUserStats');
 var awardStats = require('./stats/awardStats');
 
-var dbstring= 'localhost:27017/coffee?auto_reconnect';
+var db = require('./utils').db;
 
 module.exports.display = function(req,res){
 var obj = {};
@@ -14,12 +13,11 @@ res.render('stats',obj);
 
 module.exports.data = function(req,res){
 var obj = {}; //Render Object
-var db = mongo.db(dbstring);
 //This is NOT good when it gets big!
-db.collection('orders').find({}).toArray(function(err,allorders){
+db.orders.find({}).exec(function(err,allorders){
 
 //Yeah yeah, I know this is shit. Joins in the app layer FML.
-db.collection('coffeelist').find({}).toArray(function(err,alllists){
+db.coffeelist.find({}).exec(function(err,alllists){
 for(var ii = 0; ii < allorders.length; ii++)
 {ParseOrder(allorders[ii],alllists);}
 
@@ -49,7 +47,7 @@ val = isNaN(val)?0:val;
 x.list[key] = val;
 total += val;
 if(list[key] && list[key].intensity){
-totalintensity += val*parseInt(list[key].intensity); 
+totalintensity += val*parseInt(list[key].intensity);
 x.intensitylist[key] = list[key].intensity;
 } else {
 x.intensitylist[key] = 0;

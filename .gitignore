@@ -2,3 +2,4 @@ app.js.debug/*
 iisnode/*
 node_modules/*
 *.swp
+db/*

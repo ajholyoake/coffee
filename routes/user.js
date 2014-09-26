@@ -1,4 +1,5 @@
-var mongo = require('mongoskin');
+var db = require('./utils').db;
+
 
 function formatUsername(str)
 {
@@ -8,13 +9,11 @@ function formatUsername(str)
 exports.hello = function(req, res){
   var username = req.headers['x-iisnode-auth_user'];
   var pretty_username = formatUsername(username);
-
-var db = mongo.db('localhost:27017/coffee?auto_reconnect');
-  db.collection('coffeelist').find({},{limit:1, sort:[['orderNumber',-1]]}).toArray(function(err,stuff){
+  db.coffeelist.find({}).sort({'orderNumber':-1}).limit(1).exec(function(err,stuff){
   var orderNumber = stuff[0].orderNumber;
 
-  db.collection('coffeelist').find({"orderNumber":orderNumber}).toArray(function(err,coffees){
-    db.collection('orders').find({"orderNumber":orderNumber,"username":username}).toArray(function(err,userOrder){
+  db.coffeelist.find({"orderNumber":orderNumber}).exec(function(err,coffees){
+    db.orders.find({"orderNumber":orderNumber,"username":username}).exec(function(err,userOrder){
     var ii, displayOrder = {};
       coffees = coffees[0].list;
       userOrder = userOrder[0];
@@ -42,16 +41,15 @@ var db = mongo.db('localhost:27017/coffee?auto_reconnect');
 
 
 exports.order = function(req,res){
-var db = mongo.db('localhost:27017/coffee?auto_reconnect');
   var username = req.headers['x-iisnode-auth_user'];
   if (req.body){
-  db.collection('coffeelist').find({},{limit:1, sort:[['orderNumber',-1]]}).toArray(function(err,stuff){
+  db.coffeelist.find({}).sort({orderNumber:-1}).limit(1).exec(function(err,stuff){
   var orderNumber = parseInt(stuff[0].orderNumber);
 
-    db.collection('coffeelist').find({"orderNumber":orderNumber}).toArray(function(err,coffees){
-      
+    db.coffeelist.find({"orderNumber":orderNumber}).exec(function(err,coffees){
+
       //Check everything is OK
-      coffees = coffees[0].list;   
+      coffees = coffees[0].list;
       var data = {list:{}},ii;
       for (ii in coffees)
       {
@@ -60,11 +58,11 @@ var db = mongo.db('localhost:27017/coffee?auto_reconnect');
       data.username = username;
       data.orderNumber = orderNumber;
 
-      db.collection('orders').update({"orderNumber":orderNumber, "username":username},data,{upsert:true},function(err)
+      db.orders.update({"orderNumber":orderNumber, "username":username},data,{upsert:true},function(err)
       {
       res.send({ok:true});
       });
-  
+
     });
     });
   } else {

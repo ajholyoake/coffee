@@ -1,17 +1,16 @@
-var mongo = require('mongoskin');
 var utils = require('./utils');
 var orderNumber = module.parent.exports.orderNumber;
 
 
 exports.currentorder = function(req,res){
-  var db = mongo.db('localhost:27017/coffee?auto_reconnect');
-  db.collection('coffeelist').find({},{limit:1, sort:[['orderNumber',-1]]}).toArray(function(err,stuff){
+  var db = utils.db;
+  db.coffeelist.find({}).sort({orderNumber:1}).limit(1).exec(function(err,stuff){
     var ordno = parseInt(stuff[0].orderNumber);
     var maxordno = ordno;
-    if(req.params.id){ ordno = req.params.id;} 
+    if(req.params.id){ ordno = req.params.id;}
     ordno = parseInt(ordno);
-    db.collection('coffeelist').find({"orderNumber":ordno}).toArray(function(err,coffees){
-      db.collection('orders').find({"orderNumber":ordno},{sort:[['username',-1]]}).toArray(function(err,orders){
+    db.coffeelist.find({"orderNumber":ordno}).exec(function(err,coffees){
+      db.orders.find({"orderNumber":ordno}).sort({username:-1}).exec(function(err,orders){
         coffees = coffees[0].list;
         var coffeelist = [];
         var coffeeprices = [];
@@ -46,13 +45,13 @@ exports.currentorder = function(req,res){
                 { totals[jj] += parseInt(orders[ii].list[cname]);
                   usersummary[fu].push(orders[ii].list[cname]);
                   usercost += orders[ii].list[cname]*coffeeprices[jj];
-                } else { 
+                } else {
                   usersummary[fu].push("");
                 }
             }
             usersummary[fu].push(usercost.toFixed(2));
             if (!orders[ii].paid)  orders[ii].paid = 0;
-            usersummary[fu].push({paid:parseFloat(orders[ii].paid).toFixed(2),id:db.bson_serializer.ObjectID(orders[ii]._id.id).toHexString()});
+            usersummary[fu].push({paid:parseFloat(orders[ii].paid).toFixed(2),id:orders[ii]._id});
             if (usercost === 0)
               {delete usersummary[fu]; }
         }
@@ -64,7 +63,7 @@ exports.currentorder = function(req,res){
         }
         totalCost = totalCost.toFixed(2);
 
-        db.collection('orders').find({"username":req.headers['x-iisnode-auth_user']},{sort:[['orderNumber',-1]]}).toArray(function(err,userorders){
+        db.orders.find({"username":req.headers['x-iisnode-auth_user']}).sort({orderNumber:-1}).exec(function(err,userorders){
           var ordlist = [];
           userorders.forEach(function(el){
           var ncoffees = 0;
@@ -83,19 +82,16 @@ exports.currentorder = function(req,res){
 
 
 exports.own = function(req,res){
-  var db = mongo.db('localhost:27017/coffee?auto_reconnect');
   var current_user = req.headers['x-iisnode-auth_user'];
   if(req.body){
     var ordno = parseFloat(req.body.orderNumber);
     if(req.body.take === 'true'){
       //Own the order
 
-      db.collection('orders').update({"orderNumber":ordno},{"$set":{owner:current_user}},{multi:true},function(a,b){
-        console.log('thing');
-      });
+      db.orders.update({"orderNumber":ordno},{"$set":{owner:current_user}},{multi:true},function(a,b){ console.log('thing'); });
     } else  {
       //Give back the order
-      db.collection('orders').update({orderNumber:ordno},{"$set":{"owner":false}},{multi:true},function(a,b){console.log('thing');});
+      db.orders.update({orderNumber:ordno},{"$set":{"owner":false}},{multi:true},function(a,b){console.log('thing');});
     }
   }
   res.send('Done');
@@ -103,13 +99,12 @@ exports.own = function(req,res){
 
 
 exports.pay = function(req,res){
-  var db = mongo.db('localhost:27017/coffee?auto_reconnect');
   var current_user = utils.formatUsername(req.headers['x-iisnode-auth_user']);
   if(req.body){
     for(var ii = 0; ii <req.body.list.length; ii++)
     {
 
-      db.collection('orders').updateById(req.body.list[ii][0],{"$set":{paid:req.body.list[ii][1],owner:current_user}});
+      db.orders.update({_id:req.body.list[ii][0]},{"$set":{paid:req.body.list[ii][1],owner:current_user}});
     }
   }
 };
