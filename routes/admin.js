@@ -63,7 +63,7 @@ exports.currentorder = function(req,res){
         }
         totalCost = totalCost.toFixed(2);
 
-        db.orders.find({"username":req.headers['x-iisnode-auth_user']}).sort({orderNumber:-1}).exec(function(err,userorders){
+        db.orders.find({"username":req.user_format}).sort({orderNumber:-1}).exec(function(err,userorders){
           var ordlist = [];
           userorders.forEach(function(el){
           var ncoffees = 0;

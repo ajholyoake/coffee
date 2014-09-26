@@ -21,7 +21,7 @@ db.coffeelist.find({}).exec(function(err,alllists){
 for(var ii = 0; ii < allorders.length; ii++)
 {ParseOrder(allorders[ii],alllists);}
 
-var user = req.headers['x-iisnode-auth_user'];
+var user = req.user_format;
 
 obj.DOStats = DOStats(allorders);
 obj.userStats = userStats(allorders.filter(function(x){return x.username === user;}));

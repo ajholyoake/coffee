@@ -1,14 +1,10 @@
 var db = require('./utils').db;
 
 
-function formatUsername(str)
-{
-  return str.substr(str.indexOf('\\')+1).replace(/\./g,' ').replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-}
 
 exports.hello = function(req, res){
-  var username = req.headers['x-iisnode-auth_user'];
-  var pretty_username = formatUsername(username);
+  var username = req.user_format;
+  var pretty_username = username;
   db.coffeelist.find({}).sort({'orderNumber':-1}).limit(1).exec(function(err,stuff){
   var orderNumber = stuff[0].orderNumber;
 
@@ -41,7 +37,7 @@ exports.hello = function(req, res){
 
 
 exports.order = function(req,res){
-  var username = req.headers['x-iisnode-auth_user'];
+  var username = req.user_format;
   if (req.body){
   db.coffeelist.find({}).sort({orderNumber:-1}).limit(1).exec(function(err,stuff){
   var orderNumber = parseInt(stuff[0].orderNumber);

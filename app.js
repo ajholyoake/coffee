@@ -11,7 +11,8 @@ var express = require('express')
   , admin   = require('./routes/admin')
   , stats   = require('./routes/stats')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , utils = require('./routes/utils');
 
 var app = express();
 
@@ -26,6 +27,7 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser('your secret here'));
 app.use(express.session());
+app.use(utils.username);
 app.use(app.router);
 app.use(rootURL,express.static(path.join(__dirname, 'public')));
 app.use(rootURL + '/iisnode',express.static(path.join(__dirname,'iisnode')));
