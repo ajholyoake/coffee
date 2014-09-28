@@ -37,13 +37,13 @@ $(function(){
     $('.pops').hover(function(){$(this).popover('toggle')});
 
     $('#orderButton').click(function(e){
-      
+
       var d = {};
       var names = [];
       var quantities = [];
       var goodorder = true;
-      $('.names').each(function(){names.push($(this).text())});
-      $('.quantitybox').each(function(){ quantities.push($(this).val())});
+      $('.names').each(function(){names.push($(this).data('name'));});
+      $('.quantitybox').each(function(){ quantities.push($(this).val());});
 
 
 

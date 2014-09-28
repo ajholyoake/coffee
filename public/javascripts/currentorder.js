@@ -13,12 +13,12 @@ var cellsToRotate = $('.' + cssClass, this);
 
 var betterCells = [];
 cellsToRotate.each(function () {
-var cell = $(this)
-, newText = cell.text()
-, height = cell.height()
-, width = cell.width()
-, newDiv = $('<div>', { height: width, width: height })
-, newInnerDiv = $('<div>', { text: newText, 'class': 'rotated' });
+var cell = $(this),
+ newText = cell.text(),
+ height = cell.height(),
+ width = cell.width(),
+ newDiv = $('<div>', { height: width, width: height }),
+ newInnerDiv = $('<div>', { text: newText, 'class': 'rotated' });
 
 newInnerDiv.css('-webkit-transform-origin', (width / 2) + 'px ' + (width / 2) + 'px');
 newInnerDiv.css('-moz-transform-origin', (width / 2) + 'px ' + (width / 2) + 'px');
@@ -46,13 +46,13 @@ var p;
 $('table.table').floatThead();
 
 $('.paybox').each(function(ind,el){
-  p = updateItemTotals(el); 
+  p = updateItemTotals(el);
   totalremaining += p[0];
   totalcost += p[1];
   totalpaid += p[2];
   });
 
-var hrefstr = 'mailto:alex.holyoake@caterhamf1?';
+var hrefstr = 'mailto:aholyoake@mercedesamgf1.com';
 hrefstr += 'body=' + encodeURIComponent('<table><tbody><tr><td>yo</td><td> dfs</td></tr></tbody></table>');
 hrefstr += '&subject=' + encodeURIComponent('Coffee Order');
 
@@ -77,7 +77,7 @@ return [remaining,cost,paid];
 $('.ordertable').rotateTableCellContent();
 
 $('.paybox').bind('keypress', function(){
-    setTimeout(updateTotal,1)
+    setTimeout(updateTotal,1);
     });
 
 updateTotal();
@@ -85,7 +85,7 @@ updateTotal();
 $('#savebtn').click(function(){
 var ar = {list:[]};
 $('.paybox').each(function(){
-ar.list.push([$(this).attr('data-id'), $(this).val()])
+ar.list.push([$(this).attr('data-id'), $(this).val()]);
 });
 $.post('/coffee/pay',ar,function(data,txtStatus,jqXHR){
 });
@@ -106,13 +106,17 @@ window.location.reload(true);
 $('#finalizebtn').click(function(){
 
 //Code to display a box!
-$('#newOrderModal').modal({show:true});
+$('#newOrderModal').modal({'show':true});
 
 $.get('/coffee/genlist',function(data,txtStatus,jqXHr){
-$('#newOrderModal').modal({show:false});
-window.location.reload(true);
+    if(txtStatus === 'success'){
+        console.log(data);
+        $('#newOrderModal').modal('hide');
+        $('#finalizebtn').hide();
+    }
+});
 
-})});
+});
 
 $('#disown').click(function(){
 var ar = {};
