@@ -16,7 +16,7 @@ block content
       .span12
         p Hi #{username}, come get your #{title}
         //.span10.offset1.alert.alert-info.statsflier
-        //  a(href="stats") How do YOU stack up? (Click Here)
+          //a(href="coffee/stats") How do YOU stack up? (Click Here)
         table.table.table-hover
           thead
             th
@@ -28,8 +28,8 @@ block content
             th Total
           tbody
             each val, key in displayOrder
-              tr.vcenter
-                td.names.vcenter #{key}
+              tr.vcenter(data-name=key)
+                td.names.vcenter(data-name=key) #{val.name}
                 td.vcenter
                   a(href=val.url,data-title="Aromatic Profile:"+val.aromaticprofile,data-content=val.longdescription,data-html=1).pops
                     img(src=val.img).capsuleImage
@@ -57,7 +57,7 @@ block content
           span#messageText Sending to the server. If you reload, your order should still be here.
       .span2
         p
-          button(type=button,href='coffee/currentorder')#orderButton.btn.btn-large.btn-primary Place Order
+          button(type=button,href='/coffee/currentorder')#orderButton.btn.btn-large.btn-primary Place Order
 
 block jscripts
     script(src='/coffee/javascripts/main.js')

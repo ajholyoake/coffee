@@ -36,7 +36,7 @@ var userTable = {};
 x.forEach(function(order){
 
 var coffees = Object.keys(order.list);
- 
+
 if(!userTable[order.username]){ userTable[order.username] = 0;}
 
 for(var jj=0; jj < coffees.length; jj++){

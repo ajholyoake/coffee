@@ -4,7 +4,7 @@ var orderNumber = module.parent.exports.orderNumber;
 
 exports.currentorder = function(req,res){
   var db = utils.db;
-  db.coffeelist.find({}).sort({orderNumber:1}).limit(1).exec(function(err,stuff){
+  db.coffeelist.find({}).sort({orderNumber:-1}).limit(1).exec(function(err,stuff){
     var ordno = parseInt(stuff[0].orderNumber);
     var maxordno = ordno;
     if(req.params.id){ ordno = req.params.id;}
@@ -20,11 +20,12 @@ exports.currentorder = function(req,res){
         var usersummary = {};
         var ii,jj;
         var capsuleNumber = 0;
-        var current_user = utils.formatUsername(req.headers['x-iisnode-auth_user']);
+        var coffeenames = [];
 
         for(ii in coffees){
           coffeelist.push(ii);
           coffeeprices.push(coffees[ii].price);
+          coffeenames.push(coffees[ii].name);
         }
 
         for (ii = 0; ii< coffeelist.length;ii++){
@@ -72,7 +73,7 @@ exports.currentorder = function(req,res){
           ordlist.push(el.orderNumber);
           }
           });
-          res.render('currentorder',{title:"Current Order", coffees:coffeelist,totals:totals,usersummary:usersummary,totalCost:totalCost,orderNumber:ordno, capsuleNumber:capsuleNumber,owner:orderowner,user:current_user,owns:current_user === orderowner, userorders:ordlist,lastorder:maxordno===ordno});
+          res.render('currentorder',{title:"Current Order", coffees:coffeenames,totals:totals,usersummary:usersummary,totalCost:totalCost,orderNumber:ordno, capsuleNumber:capsuleNumber,owner:orderowner,user:req.user_format,owns:req.user_format === orderowner, userorders:ordlist,lastorder:maxordno===ordno});
         });
       });
 
@@ -82,13 +83,12 @@ exports.currentorder = function(req,res){
 
 
 exports.own = function(req,res){
-  var current_user = req.headers['x-iisnode-auth_user'];
   if(req.body){
     var ordno = parseFloat(req.body.orderNumber);
     if(req.body.take === 'true'){
       //Own the order
 
-      db.orders.update({"orderNumber":ordno},{"$set":{owner:current_user}},{multi:true},function(a,b){ console.log('thing'); });
+      db.orders.update({"orderNumber":ordno},{"$set":{owner:req.user}},{multi:true},function(a,b){ console.log('thing'); });
     } else  {
       //Give back the order
       db.orders.update({orderNumber:ordno},{"$set":{"owner":false}},{multi:true},function(a,b){console.log('thing');});
@@ -99,12 +99,11 @@ exports.own = function(req,res){
 
 
 exports.pay = function(req,res){
-  var current_user = utils.formatUsername(req.headers['x-iisnode-auth_user']);
   if(req.body){
     for(var ii = 0; ii <req.body.list.length; ii++)
     {
 
-      db.orders.update({_id:req.body.list[ii][0]},{"$set":{paid:req.body.list[ii][1],owner:current_user}});
+      db.orders.update({_id:req.body.list[ii][0]},{"$set":{paid:req.body.list[ii][1],owner:req.user}});
     }
   }
 };

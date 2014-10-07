@@ -1,0 +1,15 @@
+.container
+    .row-fluid
+        .span12
+            p The coffees below have been scraped for order number #{orderNumber}
+            table.table.table-hover
+                tbody
+                    each val,key in coffees
+                        tr.vcenter
+                            td.vcenter #{val.name}
+                            td.vcenter 
+                                img(src=val.img).capsuleImage
+                            td.vcenter !{val.longdescription}
+                            td.vcenter #{val.price}
+                            td.vcenter #{val.intensity}
+        

@@ -1,0 +1,29 @@
+node_env: production
+nodeProcessCommandLine: "c:\program files (x86)\nodejs\node.exe"
+interceptor: "c:\program files\iisnode\interceptor.js"
+nodeProcessCountPerApplication: 1
+maxConcurrentRequestsPerProcess: 1024
+maxNamedPipeConnectionRetry: 24
+namedPipeConnectionRetryDelay: 250
+maxNamedPipeConnectionPoolSize: 512
+maxNamedPipePooledConnectionAge: 30000
+asyncCompletionThreadCount: 0
+initialRequestBufferSize: 4096
+maxRequestBufferSize: 65536
+watchedFiles: *.js;*.jade;iisnode.yml
+uncFileChangesPollingInterval: 5000
+gracefulShutdownTimeout: 60000
+loggingEnabled: true
+logDirectory: iisnode
+debuggingEnabled: true
+debuggerPortRange: 5058-6058
+debuggerPathSegment: debug
+debuggerExtensionDll: iisnode-inspector.dll
+maxLogFileSizeInKB: 128
+maxTotalLogFileSizeInKB: 1024
+maxLogFiles: 20
+devErrorsEnabled: true
+flushResponse: false
+enableXFF: false
+webSocketEnabled: false
+promoteServerVars:AUTH_USER,AUTH_TYPE,LOGON_USER

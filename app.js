@@ -16,6 +16,7 @@ var express = require('express')
 
 var app = express();
 
+app.locals.pretty = true;
 
 // all environments
 app.set('port', process.env.PORT || 3000);

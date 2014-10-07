@@ -60,11 +60,11 @@ $(function(){
 
       } else {
 
-        $.post('coffee/order',d,function(data,txtStatus,jqXHR){
+        $.post('/coffee/order',d,function(data,txtStatus,jqXHR){
           //$('#messageText').html("You're done - if you really want to check that this has worked then reload and see if the numbers are still here.");
           //$('#infoAlert').removeClass().addClass('alert alert-info').fadeIn();
           e.preventDefault();
-          window.location = 'coffee/currentorder?_=' + new Date();
+          window.location = '/coffee/currentorder?_=' + new Date();
         },'json');
 
       }
