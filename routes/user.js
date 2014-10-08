@@ -53,7 +53,7 @@ exports.order = function(req,res){
       }
       data.username = username;
       data.orderNumber = orderNumber;
-
+      data.date = new Date().toJSON();
       db.orders.update({"orderNumber":orderNumber, "username":username},data,{upsert:true},function(err)
       {
       res.send({ok:true});

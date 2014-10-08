@@ -22,7 +22,7 @@ module.exports.generate = function(req,res){
             res.status(500).send(err);
             return false;
         }
-        var ul = {'orderNumber':orderNumber,'list':products};
+        var ul = {'orderNumber':orderNumber,'list':products,date:new Date().toJSON()};
         db.coffeelist.update({"orderNumber":orderNumber},ul,{upsert:true});
         res.render('coffeelist',{title:"New Coffees",orderNumber:orderNumber,coffees:products});
     }

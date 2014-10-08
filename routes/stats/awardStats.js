@@ -40,7 +40,7 @@ var coffees = Object.keys(order.list);
 if(!userTable[order.username]){ userTable[order.username] = 0;}
 
 for(var jj=0; jj < coffees.length; jj++){
-if(coffees[jj].match(r) && order.list[coffees[jj]]){
+if(order.names[coffees[jj]].match(r) && order.list[coffees[jj]]){
 userTable[order.username] += order.list[coffees[jj]];
 }
 }

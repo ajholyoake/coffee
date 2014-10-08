@@ -41,10 +41,12 @@ var totalintensity = 0;
 x.intensitylist = {};
 var list = coffeelist.filter(function(y){return y.orderNumber === x.orderNumber;})[0].list;
 //Could add intensities to the order now
+var names = {};
 Object.keys(x.list).forEach(function(key){
     var val = parseInt(x.list[key]);
     val = isNaN(val)?0:val;
     x.list[key] = val;
+    names[key] = list[key].name;
     total += val;
     if(list[key] && list[key].intensity){
     totalintensity += val*parseInt(list[key].intensity);
@@ -53,10 +55,11 @@ Object.keys(x.list).forEach(function(key){
     x.intensitylist[key] = 0;
     }
 });
+x.names = names;
 x.total = total;
 x.intensitytotal = totalintensity;
-x.date = new Date(parseInt(x._id.toString().slice(0,8),16)*1000);
-x.monthyear =[x.date.getYear(), x.date.getMonth()];
+var date = new Date(x.date);
+x.monthyear =[date.getYear(), date.getMonth()];
 }
 
 

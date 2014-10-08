@@ -21,7 +21,8 @@ return result;
 var flavourTotals = _.reduce(x,
 function(result,el){
 Object.keys(el.list).forEach(function(key){
-result[key] = result[key] ? result[key]+el.list[key] : el.list[key];
+    var nkey = el.names[key];
+result[nkey] = result[nkey] ? result[nkey]+el.list[key] : el.list[key];
 });
 return result;
 },{});
