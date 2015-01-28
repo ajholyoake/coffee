@@ -1,4 +1,4 @@
-node_env: production
+node_env: development 
 nodeProcessCommandLine: "c:\program files (x86)\nodejs\node.exe"
 interceptor: "c:\program files\iisnode\interceptor.js"
 nodeProcessCountPerApplication: 1
