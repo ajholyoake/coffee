@@ -1,5 +1,5 @@
 var cheerio = require('cheerio');
-var request = require('request').defaults({proxy:'http://172.26.13.16:8080'});
+var request = require('request');//.defaults({proxy:'http://172.26.13.17:8080'});
 var homesite = 'http://www.nespresso.com';
 var homeurl = homesite + '/uk/en/pages/grands-crus-coffee-range';
 var db = require('./utils').db;
@@ -12,8 +12,8 @@ var nproducts_parsed = 0;
 request.get(homeurl,parsePage);
 
 function parsePage(err,response,body){
-    if (err){
-        cb(err,'Couldnt get the main page');
+    if (err || response.statusCode !== 200){
+        cb({error:err,msg:'Couldnt get the main page',code:response.statusCode,body:body});
         return false;
     }
     var $ = cheerio.load(body);
@@ -62,11 +62,11 @@ function parsePrice($){
 
 
 function parseDescription($){
-  var potential = $('.scroll-bloc').find('p');
+  var potential = $('.scroll-block').find('p');
   if(potential.length){
     return potential.first().html();
   } else {
-    return $('.scroll-bloc').text();
+    return $('.scroll-block').text();
   }
 }
 
