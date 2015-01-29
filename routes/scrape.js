@@ -1,5 +1,5 @@
 var cheerio = require('cheerio');
-var request = require('request');//.defaults({proxy:'http://172.26.13.17:8080'});
+var request = require('request').defaults({proxy:'http://172.26.13.17:8080'});
 var homesite = 'http://www.nespresso.com';
 var homeurl = homesite + '/uk/en/pages/grands-crus-coffee-range';
 var db = require('./utils').db;
@@ -12,18 +12,24 @@ var nproducts_parsed = 0;
 request.get(homeurl,parsePage);
 
 function parsePage(err,response,body){
-    if (err || response.statusCode !== 200){
-        cb({error:err,msg:'Couldnt get the main page',code:response.statusCode,body:body});
-        return false;
-    }
+    if (err){
+	cb(err,null);
+	return false;
+	}
+
+	if (response && response.statusCode!==200){
+	cb({error:err,msg:'Couldnt get the main page',code:response.statusCode,body:body});
+	return false;
+	}
+
     var $ = cheerio.load(body);
     var product_list = $('.product');
     nproducts = product_list.length;
-    product_list.each(function(){parseProduct($(this));});
+    product_list.each(function(i,elem){parseProduct(i,$(this));});
 
 }
 
-function parseProduct(node){
+function parseProduct(number,node){
     var url = parseUrl(node.data('qv'));
     request.get(url,function(err,response,body)
         {
@@ -33,6 +39,7 @@ function parseProduct(node){
             }
             var $ = cheerio.load(body);
             var product = {};
+            product.number = number
             product.img = homesite + $('.nes_bloc-degrade-pop img').attr('src');
             product.longdescription = parseDescription($);
             product.types = parseTypes($);
