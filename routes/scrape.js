@@ -1,8 +1,11 @@
 var cheerio = require('cheerio');
-var request = require('request').defaults({proxy:'http://172.26.13.17:8080'});
+var request = require('request').defaults({proxy:'http://localhost:3128'});
 var homesite = 'http://www.nespresso.com';
+var agent = require('./utils').httpsAgent;
 var homeurl = homesite + '/uk/en/pages/grands-crus-coffee-range';
 var db = require('./utils').db;
+
+process.env.NODE_TLS_REJECT_UNAUTHORIZED="0";
 
 module.exports = function(cb){
 
@@ -39,7 +42,7 @@ function parseProduct(number,node){
             }
             var $ = cheerio.load(body);
             var product = {};
-            product.number = number
+            product.number = number;
             product.img = homesite + $('.nes_bloc-degrade-pop img').attr('src');
             product.longdescription = parseDescription($);
             product.types = parseTypes($);

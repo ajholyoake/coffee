@@ -1,0 +1,1 @@
+npm bower grunt-cli jshint node-gyp node-inspector

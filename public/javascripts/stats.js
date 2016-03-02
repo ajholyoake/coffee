@@ -1,7 +1,7 @@
 var data = {};
 $(function(){
 
-$.get('/coffee/statsinfo',function(d){
+$.get('/statsinfo',function(d){
 data = d;
 
 //DO totals
@@ -15,10 +15,10 @@ flavourTotalsChart(data.DOStats.flavourTotals,'#flavourTotals');
 
 flavourTotalsChart(data.allUserStats.leaderboard,'#quantityLeaderboard');
 flavourTotalsChart(data.allUserStats.intensityleaderboard,'#intensityLeaderboard');
-plotAwards(data.awardStats)
+plotAwards(data.awardStats);
 });
 
-})
+});
 
 function plotAwards(s){
   var font_sizes = [28, 24, 20, 16, 14];
@@ -27,12 +27,12 @@ function plotAwards(s){
     .data(s)
     .enter().append('div')
     .attr("class","award span4").style("text-align","center");
-    divs.append("h4").text(function(d){return d.title;})
-    divs.append("div").attr("class","description").text(function(d){return d.description;}) 
+    divs.append("h4").text(function(d){return d.title;});
+    divs.append("div").attr("class","description").text(function(d){return d.description;});
     divs.append("img").attr("class","award-image").attr("src",function(d){return d.img;}).style("width","auto");
    //var ol = divs.append("ol")
    //ol.selectAll('li').data(function(d){return d.list.slice(0,5);}).enter().append('li')
-   var d = divs.append("div").style("padding-top","10px")
+   var d = divs.append("div").style("padding-top","10px");
    d.selectAll('p').data(function(d){return d.list.slice(0,5);}).enter().append('p')
     .text(function(d,i){return formatUsername(d[0]) + " " + d[1];})
     .style("font-size",function(d,i){return font_sizes[i]+'px';})
@@ -61,7 +61,7 @@ function flavourTotalsChart(data,element){
     {
     d.push({coffee:k,value:v});
     }
-  })
+  });
     d.sort(function(a,b){return b.value - a.value;});
 
 
@@ -81,12 +81,12 @@ function flavourTotalsChart(data,element){
   svg.append("g")
      .attr("class","y axis")
      .call(yAxis)
-     .append("text")
+     .append("text");
 
   var enter = svg.selectAll('.bar')
                 .data(d)
                 .enter().append("g")
-                .attr("class","bar")
+                .attr("class","bar");
 
 
       enter.append("rect")
@@ -102,9 +102,9 @@ function flavourTotalsChart(data,element){
         .attr("width",100)
         .attr("text-anchor",function(d){return x(d.value)>20?"end":"start";})
         .attr("dominant-baseline","central")
-        .attr("fill",function(d){return x(d.value) > 20?"#fff":""})
-        .text(function(d){return d.value;})
-        
+        .attr("fill",function(d){return x(d.value) > 20?"#fff":"";})
+        .text(function(d){return d.value;});
+
 
 }
 
@@ -118,10 +118,10 @@ var margin = {top:20, right:50, bottom:20, left:50},
 
 var d = [];
 d3.map(data).forEach(function(k,v){
-   var k = k.split(',');
-   d.push({date:new Date(parseInt(k[0])+1900,k[1],1), value:v})});
+   k = k.split(',');
+   d.push({date:new Date(parseInt(k[0])+1900,k[1],1), value:v});});
 
-d.sort(function(a,b){return a.date - b.date;})
+d.sort(function(a,b){return a.date - b.date;});
 
 
 var x = d3.scale.ordinal().rangeRoundBands([0, width],0.1);
@@ -151,18 +151,18 @@ y.domain([0, d3.max(d,function(d){return d.value;})]);
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
       .attr("dy", ".71em")
-      .style("text-anchor", "end")
+      .style("text-anchor", "end");
 
  var enter =  svg.selectAll(".bar")
       .data(d)
       .enter().append("g")
-      .attr("class", "bar")
+      .attr("class", "bar");
 
       enter.append('rect')
       .attr("x",function(d){return x(d.date);})
       .attr("width",x.rangeBand())
       .attr("y",function(d){return y(d.value);})
-      .attr("height", function(d){return height - y(d.value);})
+      .attr("height", function(d){return height - y(d.value);});
 
       enter.append('text')
         .attr("x",function(d){return x(d.date);})

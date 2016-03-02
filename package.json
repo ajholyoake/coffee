@@ -6,11 +6,14 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "3.2.6",
-    "jade": "*",
     "cheerio": "*",
-    "request": "*",
+    "errorhandler": "^1.4.3",
+    "express": "^4.0.0",
+    "express-ntlm": "^2.1.4",
+    "jade": "*",
     "lodash": "~2.4.1",
-    "nedb":"*"
+    "method-override": "^2.3.5",
+    "nedb": "*",
+    "request": "*"
   }
 }

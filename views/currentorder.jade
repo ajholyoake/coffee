@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  
+
   .container(style="width:90%;")
     .row-fluid
       .span12
@@ -21,7 +21,7 @@ block content
                 th Paid
                 th Remaining
           tbody
-            tr.info 
+            tr.info
               td Totals
                 each val in totals
                   td #{val}
@@ -31,17 +31,17 @@ block content
                 td#totalRemaining
 
             each val,key in usersummary
-              tr 
+              tr
                 td #{key}
                 each v,ind in val
                   if ind === val.length-1 && owns
                     td
                       input(data-id=v.id,type="text",value=v.paid,pattern='[0-9\.]*').paybox
                   else if ind !== val.length-1
-                    td #{v} 
+                    td #{v}
                 if owns
                   td.payremaining
-    if owns        
+    if owns
       .row-fluid
         //.span3
         //  a(href='mailto:alex.holyoake@caterham.com')#reminder.btn.btn-large.btn-default Email Reminder
@@ -50,7 +50,7 @@ block content
         if lastorder
           .span3
             button(type=button)#finalizebtn.btn.btn-large.btn-warning Finalize order (FOREVER!)
-        
+
         .span3.pull-right
           button(type=button)#savebtn.btn.btn-large.btn-primary Save Payments
     else if capsuleNumber > 200 && owner === false
@@ -62,8 +62,8 @@ block content
       .span12
           p Your other orders
           each val, key in userorders
-            a(href="/coffee/currentorder/" + val) #{val} 
-   
+            a(href="/currentorder/" + val) #{val}
+
     #newOrderModal.modal.hide.fade
       .modal-header
         h3 Closing Order
@@ -71,7 +71,6 @@ block content
         p Closing current order and creating a new one - chill your beans
 
 block jscripts
-  script(src='/coffee/javascripts/vendor/underscore-min.js')
-  script(src='/coffee/javascripts/vendor/jquery.floatThead.js')
-  script(src='/coffee/javascripts/currentorder.js')
-
+  script(src='/javascripts/vendor/underscore-min.js')
+  script(src='/javascripts/vendor/jquery.floatThead.js')
+  script(src='/javascripts/currentorder.js')

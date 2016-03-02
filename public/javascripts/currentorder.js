@@ -1,5 +1,12 @@
 (function ($) {
   $.fn.rotateTableCellContent = function (options) {
+  $.fn.rotate = function(degrees) {
+    $(this).css({'-webkit-transform' : 'rotate('+ degrees +'deg)',
+                 '-moz-transform' : 'rotate('+ degrees +'deg)',
+                 '-ms-transform' : 'rotate('+ degrees +'deg)',
+                 'transform' : 'rotate('+ degrees +'deg)'});
+    return $(this);
+};
   /*
 Version 1.0
 7/2011
@@ -19,9 +26,13 @@ var cell = $(this),
  width = cell.width(),
  newDiv = $('<div>', { height: width, width: height }),
  newInnerDiv = $('<div>', { text: newText, 'class': 'rotated' });
+newInnerDiv.css('display','block');
+newInnerDiv.css('transform-origin', (width / 2) + 'px ' + (width / 2) + 'px');
+//newInnerDiv.css('transform-origin', (width / 2) + 'px ' + (width / 2) + 'px');
+newInnerDiv.rotate(270);
+//newInnerDiv.css('transform','rotate(270deg)');
 
-newInnerDiv.css('-webkit-transform-origin', (width / 2) + 'px ' + (width / 2) + 'px');
-newInnerDiv.css('-moz-transform-origin', (width / 2) + 'px ' + (width / 2) + 'px');
+
 newDiv.append(newInnerDiv);
 
 betterCells.push(newDiv);
