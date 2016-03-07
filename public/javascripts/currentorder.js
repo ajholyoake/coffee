@@ -107,7 +107,7 @@ var ar = {};
 ar.take = true;
 ar.orderNumber = $('#takeownership').data('id');
 
-$.post('/coffee/own',ar,function(data,txtStatus,jqXHR){
+$.post('/own',ar,function(data,txtStatus,jqXHR){
 window.location.reload(true);
 });
 
@@ -119,7 +119,7 @@ $('#finalizebtn').click(function(){
 //Code to display a box!
 $('#newOrderModal').modal({'show':true});
 
-$.get('/coffee/genlist',function(data,txtStatus,jqXHr){
+$.get('/genlist',function(data,txtStatus,jqXHr){
     if(txtStatus === 'success'){
         console.log(data);
         $('#newOrderModal').modal('hide');
@@ -134,7 +134,7 @@ var ar = {};
 ar.take = false;
 ar.orderNumber = $('#disown').data('id');
 
-$.post('/coffee/own',ar,function(data,txtStatus,jqXHR){
+$.post('/own',ar,function(data,txtStatus,jqXHR){
 window.location.reload(true);
 });
 });
