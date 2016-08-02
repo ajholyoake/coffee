@@ -24,7 +24,7 @@ var app = express();
 app.locals.pretty = true;
 
 // all environments
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 9900);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 
