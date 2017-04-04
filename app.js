@@ -11,13 +11,13 @@ var bodyParser = require('body-parser');
 var ntlm = require('express-ntlm');
 var errorHandler = require('errorhandler');
 var methodOverride = require('method-override');
-
 var user = require('./routes/user');
 var genlist = require('./routes/genlist');
 var admin = require('./routes/admin');
 var stats = require('./routes/stats');
 var path = require('path');
 var utils = require('./routes/utils');
+var secrets = require('./secrets');
 
 var app = express();
 
@@ -30,7 +30,7 @@ app.set('view engine', 'jade');
 
 //app.use(express.favicon());
 //app.use(express.logger('dev'));
-app.use(ntlm({'domain':'***REMOVED***','domaincontroller':'***REMOVED***'}));
+app.use(ntlm({'domain':secrets.domain,'domaincontroller':secrets.domaincontroller}));
 app.use(bodyParser.urlencoded({'extended':true}));
 app.use(bodyParser.json());
 app.use(methodOverride());
